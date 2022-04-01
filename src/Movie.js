@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './Movie.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
