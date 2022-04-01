@@ -11,11 +11,13 @@ function App() {
     const [favList, setFavList] = useState(() => {
         let storageFavList = localStorage.getItem('favList');
 
-        return JSON.parse(storageFavList);
+        return JSON.parse(storageFavList) ?? [];
     });
 
+    const [loading, setLoading] = useState(true);
+
     useEffect(() => {
-        fetch(`http://www.omdbapi.com/?s=${search}&apikey=22d06335`)
+        fetch(`https://www.omdbapi.com/?s=${search}&apikey=22d06335`)
             .then(response => {
                 // console.log(response);
                 if (response.ok) {
@@ -33,9 +35,11 @@ function App() {
                         return prev;
                     }
                     else {
+                        setLoading(true);
                         return data.Search;
                     }
                 })
+                setLoading(false);
             })
             .catch(error => {
                 console.log("Error fetching data", error);
@@ -78,10 +82,11 @@ function App() {
             <div className='container-fluid movies-section'>
                 <MovieList
                     heading='Movies'
+                    loading={loading}
                     renderList={movieList}
                     favList={favList}
                     toggleFav={toggleFav}
-                    />
+                />
                 <MovieList
                     heading='Favourites'
                     renderList={favList}
